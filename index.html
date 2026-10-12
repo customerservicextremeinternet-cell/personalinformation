@@ -135,6 +135,16 @@
             object-fit: cover;
             border: 3px solid #121216;
             background-color: #1a1a1e;
+            -webkit-user-select: none;
+            user-select: none;
+            -webkit-touch-callout: none;
+            pointer-events: none;
+            transition: filter 0.2s ease-in-out;
+        }
+
+        /* Dynamic Blur Class triggered on screenshot attempt */
+        .avatar.blurred {
+            filter: blur(25px) !important;
         }
 
         .name {
@@ -328,9 +338,40 @@
             text-transform: uppercase;
         }
 
+        /* Security Warning Toast Notification */
+        .security-warning-toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: rgba(82, 9, 16, 0.95);
+            border: 1px solid var(--accent-gold-end);
+            color: var(--text-white);
+            padding: 14px 24px;
+            border-radius: 14px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.8), 0 0 20px rgba(144, 22, 37, 0.5);
+            z-index: 9999;
+            opacity: 0;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            pointer-events: none;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .security-warning-toast.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+
         /* Reduced Motion Support */
         @media (prefers-reduced-motion: reduce) {
-            .card-container, .btn, .social-icon-btn {
+            .card-container, .btn, .social-icon-btn, .security-warning-toast, .avatar {
                 animation: none;
                 transition: none;
             }
@@ -340,6 +381,12 @@
 <body>
 
     <div class="glow-sphere"></div>
+
+    <!-- Security Warning Notification Banner -->
+    <div id="securityWarning" class="security-warning-toast">
+        <i class="fa-solid fa-triangle-exclamation" style="color: var(--accent-gold-end); font-size: 1.1rem;"></i>
+        <span>Saving images and taking screenshots are prohibited on this profile.</span>
+    </div>
 
     <div class="card-container">
         
@@ -534,6 +581,83 @@
             document.body.removeChild(link);
             URL.revokeObjectURL(url);
         }
+
+        /* ==========================================================
+           SECURITY PROTECTION, BLUR & WARNING LOGIC
+           ========================================================== */
+        let warningTimeout;
+        let unblurTimeout;
+
+        function triggerSecurityWarning(customMessage) {
+            const toast = document.getElementById("securityWarning");
+            const textSpan = toast.querySelector("span");
+            if (customMessage) {
+                textSpan.textContent = customMessage;
+            }
+            
+            toast.classList.add("show");
+            
+            clearTimeout(warningTimeout);
+            warningTimeout = setTimeout(() => {
+                toast.classList.remove("show");
+            }, 3500);
+        }
+
+        function blurProfileImage(message) {
+            const img = document.getElementById("profileImage");
+            img.classList.add("blurred");
+            triggerSecurityWarning(message || "Taking screenshots is prohibited. Image has been blurred.");
+
+            // Automatically remove blur after 6 seconds if user returns or stops
+            clearTimeout(unblurTimeout);
+            unblurTimeout = setTimeout(() => {
+                img.classList.remove("blurred");
+            }, 6000);
+        }
+
+        // Prohibit right-clicking / context menu specifically on images and avatar wrappers
+        document.addEventListener("contextmenu", (e) => {
+            if (e.target.tagName === "IMG" || e.target.closest(".avatar-wrapper")) {
+                e.preventDefault();
+                blurProfileImage("Saving images is prohibited on this profile.");
+            }
+        });
+
+        // Prohibit dragging the profile image to save it
+        document.addEventListener("dragstart", (e) => {
+            if (e.target.tagName === "IMG") {
+                e.preventDefault();
+                blurProfileImage("Image downloading is prohibited.");
+            }
+        });
+
+        // Detect PrintScreen key press or save shortcuts
+        document.addEventListener("keydown", (e) => {
+            if (e.key === "PrintScreen") {
+                e.preventDefault();
+                navigator.clipboard.writeText("Screenshot capture is disabled on this profile.");
+                blurProfileImage("Taking screenshots is prohibited on this profile.");
+            }
+            
+            if ((e.ctrlKey || e.metaKey) && (e.key === 's' || e.key === 'S')) {
+                e.preventDefault();
+                blurProfileImage("Saving page content is prohibited.");
+            }
+        });
+
+        // Detect when window loses focus (triggers when OS snipping tool overlays open)
+        window.addEventListener("blur", () => {
+            const img = document.getElementById("profileImage");
+            img.classList.add("blurred");
+        });
+
+        // Restore image when user focuses back on the tab
+        window.addEventListener("focus", () => {
+            setTimeout(() => {
+                const img = document.getElementById("profileImage");
+                img.classList.remove("blurred");
+            }, 800);
+        });
     </script>
 </body>
 </html>
