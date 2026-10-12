@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Abdulrahim M. Lindongan | Executive Digital Profile</title>
+    <meta name="description" content="Official digital business card for Abdulrahim M. Lindongan, CSE, SO2.">
+    
+    <!-- Google Fonts: Syne & Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --bg-primary: #050507;
+            --bg-card: rgba(18, 18, 22, 0.75);
+            --border-card: rgba(255, 255, 255, 0.08);
+            --border-glow: rgba(165, 28, 48, 0.4);
+            
+            --accent-burgundy: #520910;
+            --accent-crimson: #901625;
+            --accent-gold-start: #FFE58F;
+            --accent-gold-end: #D4AF37;
+            
+            --text-white: #FFFFFF;
+            --text-gold: #E5C378;
+            --text-silver: #A1A1AA;
+            
+            --card-width: 440px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-white);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 24px 16px;
+            position: relative;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(144, 22, 37, 0.25) 0%, transparent 60%),
+                radial-gradient(circle at 85% 90%, rgba(212, 175, 55, 0.08) 0%, transparent 40%);
+        }
+
+        /* Ambient Glow Spheres */
+        .glow-sphere {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(144, 22, 37, 0.3) 0%, transparent 70%);
+            filter: blur(50px);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* Main Glassmorphic Card Container */
+        .card-container {
+            width: 100%;
+            max-width: var(--card-width);
+            background: var(--bg-card);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--border-card);
+            border-radius: 28px;
+            padding: 40px 30px;
+            box-shadow: 
+                0 30px 60px rgba(0, 0, 0, 0.8),
+                0 0 40px rgba(144, 22, 37, 0.15),
+                inset 0 1px 1px rgba(255, 255, 255, 0.1);
+            position: relative;
+            z-index: 1;
+            overflow: hidden;
+            animation: cardEntrance 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes cardEntrance {
+            from { opacity: 0; transform: translateY(24px) scale(0.96); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        /* Metallic Top Accent Line */
+        .card-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 15%;
+            right: 15%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent-gold-start), var(--accent-crimson), transparent);
+        }
+
+        /* Profile Header */
+        .profile-header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .avatar-wrapper {
+            position: relative;
+            width: 128px;
+            height: 128px;
+            margin: 0 auto 24px auto;
+        }
+
+        /* Rotating Animated Gold Halo */
+        .avatar-wrapper::after {
+            content: '';
+            position: absolute;
+            top: -4px; left: -4px; right: -4px; bottom: -4px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent-gold-start), var(--accent-crimson), var(--accent-gold-end));
+            z-index: -1;
+            opacity: 0.8;
+            filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.4));
+        }
+
+        .avatar {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #121216;
+            background-color: #1a1a1e;
+        }
+
+        .name {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(1.4rem, 5vw, 1.75rem);
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            margin-bottom: 8px;
+            color: var(--text-white);
+            text-transform: uppercase;
+            line-height: 1.2;
+        }
+
+        .credentials-badge {
+            display: inline-block;
+            font-family: 'Syne', sans-serif;
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--text-gold);
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.12), rgba(144, 22, 37, 0.2));
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            padding: 5px 14px;
+            border-radius: 20px;
+            margin-bottom: 16px;
+        }
+
+        .professions-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            margin-bottom: 16px;
+        }
+
+        .professions-list li {
+            font-size: 0.92rem;
+            color: var(--text-silver);
+            font-weight: 400;
+            line-height: 1.4;
+        }
+
+        .location {
+            font-size: 0.85rem;
+            color: var(--text-silver);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            opacity: 0.85;
+        }
+
+        .location i {
+            color: var(--accent-gold-end);
+        }
+
+        .divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            margin: 24px 0;
+        }
+
+        /* Action Buttons */
+        .actions-section {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            padding: 14px 20px;
+            border-radius: 14px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            border: 1px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #FFE58F 0%, #D4AF37 50%, #901625 100%);
+            color: #000000;
+            font-weight: 700;
+            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.25);
+            border: none;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 28px rgba(212, 175, 55, 0.4);
+            filter: brightness(1.08);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.03);
+            color: var(--text-white);
+            border-color: rgba(255, 255, 255, 0.08);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(144, 22, 37, 0.2);
+            border-color: rgba(144, 22, 37, 0.5);
+            color: var(--text-white);
+            transform: translateY(-2px);
+        }
+
+        /* Social Media Section */
+        .social-section {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .social-title {
+            font-family: 'Syne', sans-serif;
+            font-size: 0.8rem;
+            color: var(--text-gold);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+        }
+
+        .social-grid {
+            display: flex;
+            justify-content: center;
+            gap: 14px;
+        }
+
+        .social-icon-btn {
+            width: 48px;
+            height: 48px;
+            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: var(--text-white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .social-icon-btn:hover {
+            background: linear-gradient(135deg, var(--accent-burgundy), var(--accent-crimson));
+            border-color: var(--accent-gold-end);
+            color: var(--text-white);
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 20px rgba(144, 22, 37, 0.4);
+        }
+
+        /* Optional About Me Section */
+        .about-section {
+            background: rgba(0, 0, 0, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 18px;
+            margin-bottom: 24px;
+            font-size: 0.88rem;
+            color: var(--text-silver);
+            line-height: 1.6;
+            text-align: center;
+        }
+
+        .about-title {
+            font-family: 'Syne', sans-serif;
+            font-size: 0.8rem;
+            color: var(--text-white);
+            letter-spacing: 1.5px;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        /* Footer Branding */
+        .card-footer {
+            text-align: center;
+            font-size: 0.75rem;
+            color: var(--text-silver);
+            opacity: 0.5;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* Reduced Motion Support */
+        @media (prefers-reduced-motion: reduce) {
+            .card-container, .btn, .social-icon-btn {
+                animation: none;
+                transition: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="glow-sphere"></div>
+
+    <div class="card-container">
+        
+        <!-- Profile Header -->
+        <div class="profile-header">
+            <div class="avatar-wrapper">
+                <!-- Profile photo set to profile.jpg -->
+                <img id="profileImage" src="profile.jpg" alt="Abdulrahim M. Lindongan" class="avatar" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'128\' height=\'128\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'%23D4AF37\' stroke-width=\'1.5\'><circle cx=\'12\' cy=\'8\' r=\'4\'/><path d=\'M6 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2\'/></svg>'">
+            </div>
+            
+            <h1 id="fullName" class="name">Abdulrahim M. Lindongan</h1>
+            <div id="credentialBadges" class="credentials-badge">CSE, SO2</div>
+            
+            <ul id="professionsList" class="professions-list">
+                <li>Undergrad Bachelor of Science in Civil Engineering</li>
+                <li>Civil Service Professional Level Passer</li>
+                <li>Qualified Safety Officer 2</li>
+            </ul>
+
+            <div id="locationWrapper" class="location">
+                <i class="fa-solid fa-location-dot"></i>
+                <span id="locationText">Lomidong, Marawi City</span>
+            </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- Optional About Me Section -->
+        <div id="aboutSection" class="about-section">
+            <div class="about-title">Executive Profile</div>
+            <p id="aboutText">Dedicated public service professional, safety officer, and civil engineering undergraduate committed to technical excellence, safety standards, and community leadership.</p>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="actions-section">
+            <button id="saveContactBtn" class="btn btn-primary">
+                <i class="fa-solid fa-user-plus"></i> Save Contact
+            </button>
+            <a id="emailBtn" href="#" class="btn btn-secondary">
+                <i class="fa-solid fa-envelope"></i> Email Me
+            </a>
+            <a id="callBtn" href="#" class="btn btn-secondary">
+                <i class="fa-solid fa-phone"></i> Call Me
+            </a>
+        </div>
+
+        <!-- Social Media Section -->
+        <div class="social-section">
+            <div class="social-title">Connect Online</div>
+            <div class="social-grid">
+                <!-- Facebook -->
+                <a id="facebookLink" href="#" target="_blank" rel="noopener noreferrer" class="social-icon-btn" aria-label="Facebook">
+                    <i class="fa-brands fa-facebook-f"></i>
+                </a>
+                <!-- Instagram -->
+                <a id="instagramLink" href="#" target="_blank" rel="noopener noreferrer" class="social-icon-btn" aria-label="Instagram">
+                    <i class="fa-brands fa-instagram"></i>
+                </a>
+                <!-- Telegram -->
+                <a id="telegramLink" href="#" target="_blank" rel="noopener noreferrer" class="social-icon-btn" aria-label="Telegram">
+                    <i class="fa-brands fa-telegram"></i>
+                </a>
+            </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- Footer -->
+        <div class="card-footer">
+            Digital Profile &bull; Tap NFC Card
+        </div>
+
+    </div>
+
+    <script>
+        /* ==========================================================
+           PERSONAL CONFIGURATION & EDITABLE DATA
+           ========================================================== */
+        const profileData = {
+            firstName: "Abdulrahim",
+            lastName: "M. Lindongan",
+            suffix: "CSE, SO2",
+            professions: [
+                "Undergrad Bachelor of Science in Civil Engineering",
+                "Civil Service Professional Level Passer",
+                "Qualified Safety Officer 2"
+            ],
+            location: "Lomidong, Marawi City",
+            email: "abdulrahimlindongan03@gmail.com",
+            phone: "09460289832",
+            phoneFormatted: "0946-028-9832",
+            
+            // Social Media URLs
+            socials: {
+                facebook: "https://www.facebook.com/itsraymmmm",
+                instagram: "https://www.instagram.com/itsme.raheeem/",
+                telegram: "https://t.me/itsraymmmm"
+            },
+            
+            // Optional About Me settings
+            showAbout: true,
+            aboutBio: "Dedicated public service professional, safety officer, and civil engineering undergraduate committed to technical excellence, safety standards, and community leadership."
+        };
+
+        /* ==========================================================
+           DYNAMIC POPULATION LOGIC
+           ========================================================== */
+        document.addEventListener("DOMContentLoaded", () => {
+            // Populate Name & Credentials
+            document.getElementById("fullName").textContent = `${profileData.firstName} ${profileData.lastName}`;
+            document.getElementById("credentialBadges").textContent = profileData.suffix;
+
+            // Populate Professions List
+            const profListEl = document.getElementById("professionsList");
+            profListEl.innerHTML = profileData.professions.map(prof => `<li>${prof}</li>`).join('');
+
+            // Populate Location
+            document.getElementById("locationText").textContent = profileData.location;
+
+            // Populate About Section
+            const aboutEl = document.getElementById("aboutSection");
+            if (profileData.showAbout && profileData.aboutBio) {
+                document.getElementById("aboutText").textContent = profileData.aboutBio;
+                aboutEl.style.display = "block";
+            } else {
+                aboutEl.style.display = "none";
+            }
+
+            // Configure Email Button
+            const emailBtn = document.getElementById("emailBtn");
+            if (profileData.email) {
+                emailBtn.href = `mailto:${profileData.email}`;
+                emailBtn.style.display = "flex";
+            } else {
+                emailBtn.style.display = "none";
+            }
+
+            // Configure Call Button
+            const callBtn = document.getElementById("callBtn");
+            if (profileData.phone) {
+                callBtn.href = `tel:${profileData.phone}`;
+                callBtn.innerHTML = `<i class="fa-solid fa-phone"></i> Call Me (${profileData.phoneFormatted})`;
+                callBtn.style.display = "flex";
+            } else {
+                callBtn.style.display = "none";
+            }
+
+            // Configure Social Links
+            setupSocialLink("facebookLink", profileData.socials.facebook);
+            setupSocialLink("instagramLink", profileData.socials.instagram);
+            setupSocialLink("telegramLink", profileData.socials.telegram);
+
+            // Configure vCard Download
+            document.getElementById("saveContactBtn").addEventListener("click", downloadVCard);
+        });
+
+        function setupSocialLink(elementId, url) {
+            const el = document.getElementById(elementId);
+            if (url && url.trim() !== "") {
+                el.href = url;
+                el.style.display = "flex";
+            } else {
+                el.style.display = "none";
+            }
+        }
+
+        /* ==========================================================
+           VCARD GENERATOR FUNCTION
+           ========================================================== */
+        function downloadVCard() {
+            const vCardData = [
+                "BEGIN:VCARD",
+                "VERSION:3.0",
+                `N:${profileData.lastName};${profileData.firstName};;;`,
+                `FN:${profileData.firstName} ${profileData.lastName}, ${profileData.suffix}`,
+                `TITLE:${profileData.professions[0]}`,
+                `TEL;TYPE=CELL:${profileData.phone}`,
+                `EMAIL:${profileData.email}`,
+                `ADR;TYPE=WORK:;;${profileData.location};;;;`,
+                `NOTE:${profileData.aboutBio}`,
+                "END:VCARD"
+            ].join("\n");
+
+            const blob = new Blob([vCardData], { type: "text/vcard;charset=utf-8;" });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement("a");
+            link.href = url;
+            link.setAttribute("filename", `${profileData.firstName}_${profileData.lastName}.vcf`);
+            link.download = `${profileData.firstName}_${profileData.lastName}.vcf`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+        }
+    </script>
+</body>
+</html>
